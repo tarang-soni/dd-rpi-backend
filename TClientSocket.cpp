@@ -12,10 +12,10 @@ namespace dd_rpi_backend
     TClientSocket::TClientSocket() = default;
     TClientSocket::~TClientSocket() = default;
 
-    TClientSocket* TClientSocket::create()
+    std::unique_ptr<TClientSocket> TClientSocket::create()
     {
         #if defined(_WIN32)|| defined(_WIN64)
-        return new WinClientSocket();
+        return std::make_unique<WinClientSocket>();
         #endif
     }
 } // dd_rpi_backend

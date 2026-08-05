@@ -18,7 +18,11 @@ namespace dd_rpi_backend
         }else
         {
             std::cerr << "WSAStartup success." << std::endl;
+
             s = socket(AF_INET,SOCK_STREAM,IPPROTO_TCP);
+            int flag = 1;
+            // socketFd is your native socket handle
+            setsockopt(s, IPPROTO_TCP, TCP_NODELAY, (char*)&flag, sizeof(int));
         }
 
     }

@@ -6,8 +6,9 @@
 #include <_bsd_types.h>
 #include <string>
 #include <cstdint>
+#include <memory>
 
-#include "Utils.h"
+#include "Protocols.h"
 
 namespace dd_rpi_backend
 {
@@ -24,7 +25,7 @@ namespace dd_rpi_backend
 
         virtual void close() = 0;
 
-        static TClientSocket* create();
+        static std::unique_ptr<TClientSocket> create();
 
     };
 } // dd_rpi_backend
