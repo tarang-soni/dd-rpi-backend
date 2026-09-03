@@ -43,7 +43,7 @@ void dd_rpi_backend::Application::handleCommand(ServerCommand cmd)
     {
         case ServerCommand::StartStream:
             std::cout << "[App]: Instructing VideoStreamer to START." << std::endl;
-            m_streamer.start("127.0.0.1",5000);
+            m_streamer.start("192.168.1.101",5000);
 
             break;
 
