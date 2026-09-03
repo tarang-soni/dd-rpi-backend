@@ -46,13 +46,17 @@ bool dd_rpi_backend::VideoStreamer::start(const std::string& clientIp, int port)
 #elif defined(__linux__)
 
     pipelineString =
-        "libcamerasrc ! "
-        "video/x-raw,width=640,height=480,framerate=30/1 ! "
-        "x264enc tune=zerolatency ! "
-        "rtph264pay config-interval=1 ! "
-        "udpsink host=" + clientIp +
-        " port=" + std::to_string(port) +
-        " sync=false";
+    "libcamerasrc ! "
+    "video/x-raw,width=640,height=480,format=I420,framerate=15/1 ! "
+    "x264enc "
+    "tune=zerolatency "
+    "speed-preset=ultrafast "
+    "bitrate=700 "
+    "threads=1 ! "
+    "rtph264pay pt=96 config-interval=1 ! "
+    "udpsink host=" + clientIp +
+    " port=" + std::to_string(port) +
+    " sync=false async=false";
 
 #else
 #error Unsupported platform
