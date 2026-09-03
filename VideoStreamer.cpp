@@ -45,14 +45,11 @@ bool dd_rpi_backend::VideoStreamer::start(const std::string& clientIp, int port)
 
 #elif defined(__linux__)
 
-    pipelineString =
+    QString pipelineString =
     "libcamerasrc ! "
     "video/x-raw,width=640,height=480,format=I420,framerate=15/1 ! "
-    "x264enc "
-    "tune=zerolatency "
-    "speed-preset=ultrafast "
-    "bitrate=700 "
-    "threads=1 ! "
+    "v4l2h264enc extra-controls=\"controls,video_bitrate=700000\" ! "
+    "h264parse ! "
     "rtph264pay pt=96 config-interval=1 ! "
     "udpsink host=" + clientIp +
     " port=" + std::to_string(port) +
