@@ -5,7 +5,6 @@
 #include "CommandListener.h"
 
 #include <iostream>
-#include <winsock2.h>
 
 #include "TClientSocket.h"
 
