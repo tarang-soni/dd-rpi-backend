@@ -15,7 +15,7 @@ bool dd_rpi_backend::Application::init()
     auto commandCallback = [this](ServerCommand cmd) {
         this->handleCommand(cmd);
     };
-    m_networkManager.start("127.0.0.1",1234,commandCallback);
+    m_networkManager.start("192.168.1.101",1234,commandCallback);
     m_isRunning = true;
     return true;
 }
