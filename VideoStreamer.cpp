@@ -21,39 +21,67 @@ dd_rpi_backend::VideoStreamer::~VideoStreamer()
     stop();
 }
 
-bool dd_rpi_backend::VideoStreamer::start(const std::string& clientIp,int port)
+bool dd_rpi_backend::VideoStreamer::start(const std::string& clientIp, int port)
 {
-    //build pipeline string
-    //launch pipeline
-    //now play with the state of the pipeline
-    if (pipeline!=nullptr)
+    if (pipeline != nullptr)
     {
-        std::cerr<<"Stream is already running..."<<std::endl;
+        std::cerr << "Stream is already running..." << std::endl;
         return true;
     }
-    std::string pi_pipeline_string =
-        "mfvideosrc ! videoconvert ! video/x-raw,width=640,height=480,framerate=30/1 ! "
-        "x264enc tune=zerolatency ! rtph264pay config-interval=1 ! "
-        "udpsink host=" + clientIp + " port=" + std::to_string(port) + " sync=false";
+
+    std::string pipelineString;
+
+#if defined(_WIN32) || defined(_WIN64)
+
+    pipelineString =
+        "mfvideosrc ! "
+        "videoconvert ! "
+        "video/x-raw,width=640,height=480,framerate=30/1 ! "
+        "x264enc tune=zerolatency ! "
+        "rtph264pay config-interval=1 ! "
+        "udpsink host=" + clientIp +
+        " port=" + std::to_string(port) +
+        " sync=false";
+
+#elif defined(__linux__)
+
+    pipelineString =
+        "libcamerasrc ! "
+        "video/x-raw,width=640,height=480,framerate=30/1 ! "
+        "x264enc tune=zerolatency ! "
+        "rtph264pay config-interval=1 ! "
+        "udpsink host=" + clientIp +
+        " port=" + std::to_string(port) +
+        " sync=false";
+
+#else
+#error Unsupported platform
+#endif
 
     GError *gerr = nullptr;
-    pipeline = gst_parse_launch(pi_pipeline_string.c_str(), &gerr);
-    if (gerr!=nullptr)
+    pipeline = gst_parse_launch(pipelineString.c_str(), &gerr);
+
+    if (gerr != nullptr)
     {
-        std::cerr<<"Failed to parse command line:"<<gerr->message<<std::endl;
+        std::cerr << "Failed to parse pipeline: "
+                  << gerr->message << std::endl;
         g_error_free(gerr);
         return false;
     }
 
+    GstStateChangeReturn ret =
+        gst_element_set_state(pipeline, GST_STATE_PLAYING);
 
-    GstStateChangeReturn ret = gst_element_set_state(pipeline, GST_STATE_PLAYING);
     if (ret == GST_STATE_CHANGE_FAILURE)
     {
-        std::cerr<<"Camera or hardware encoder failed to start."<<std::endl;
+        std::cerr << "Camera or encoder failed to start." << std::endl;
         stop();
         return false;
     }
-    std::cout << "Streaming started to " << clientIp << ":" << port << std::endl;
+
+    std::cout << "Streaming started to "
+              << clientIp << ":" << port << std::endl;
+
     return true;
 }
 
