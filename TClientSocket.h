@@ -3,7 +3,7 @@
 //
 #ifndef RPI_BACKEND_TSOCKET_H
 #define RPI_BACKEND_TSOCKET_H
-#include <_bsd_types.h>
+
 #include <string>
 #include <cstdint>
 #include <memory>
@@ -18,7 +18,7 @@ namespace dd_rpi_backend
         TClientSocket();
         virtual ~TClientSocket();
 
-        virtual bool connect(const char* ip_addr,u_short port) = 0;
+        virtual bool connect(const char* ip_addr,uint16_t port) = 0;
 
         virtual bool send(const ClientResponse& message) = 0;
         virtual const ServerCommand receive() =0;

@@ -17,7 +17,7 @@ namespace dd_rpi_backend
         public:
         WinClientSocket();
         ~WinClientSocket() override;
-        bool connect(const char* ip_addr,u_short port) override;
+        bool connect(const char* ip_addr,uint16_t port) override;
 
         bool send(const ClientResponse& message) override;
         const ServerCommand receive() override;
