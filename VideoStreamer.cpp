@@ -48,7 +48,7 @@ bool dd_rpi_backend::VideoStreamer::start(const std::string& clientIp, int port)
     pipelineString =
     "libcamerasrc ! "
     "video/x-raw,width=640,height=480,framerate=15/1 ! "
-    "jpegenc quality=75 ! "
+    "jpegenc quality=60 ! "
     "rtpjpegpay pt=26 ! "
     "udpsink host=" + clientIp +
     " port=" + std::to_string(port) +
