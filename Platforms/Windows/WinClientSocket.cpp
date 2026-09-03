@@ -59,8 +59,7 @@ namespace dd_rpi_backend
         }
         return true;
     }
-
-    const ServerCommand WinClientSocket::receive()
+    ServerCommand WinClientSocket::receive()
     {
         uint8_t buffer;
         int bytesReceived = recv(s,reinterpret_cast<char*> (&buffer),1,0);

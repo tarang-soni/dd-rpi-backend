@@ -21,7 +21,7 @@ namespace dd_rpi_backend
         virtual bool connect(const char* ip_addr,uint16_t port) = 0;
 
         virtual bool send(const ClientResponse& message) = 0;
-        virtual const ServerCommand receive() =0;
+        virtual ServerCommand receive() =0;
 
         virtual void close() = 0;
 

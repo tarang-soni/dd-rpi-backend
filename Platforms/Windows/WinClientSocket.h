@@ -20,7 +20,7 @@ namespace dd_rpi_backend
         bool connect(const char* ip_addr,uint16_t port) override;
 
         bool send(const ClientResponse& message) override;
-        const ServerCommand receive() override;
+        ServerCommand receive() override;
         void close() override;
     private:
         SOCKET s;
