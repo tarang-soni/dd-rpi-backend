@@ -15,8 +15,11 @@ set(PLATFORM_INCLUDE_DIRS)
 if(WIN32)
 
     list(APPEND PLATFORM_SOURCES
-            Platforms/Windows/WinClientSocket.cpp
-            Platforms/Windows/WinClientSocket.h
+            Platforms/Windows/WinTcpSocket.cpp
+            Platforms/Windows/WinTcpSocket.h
+
+            Platforms/Windows/WinUDPSocket.cpp
+            Platforms/Windows/WinUDPSocket.h
     )
 
     list(APPEND PLATFORM_INCLUDE_DIRS
@@ -26,8 +29,8 @@ if(WIN32)
 elseif(UNIX)
 
     list(APPEND PLATFORM_SOURCES
-            Platforms/Linux/LinuxClientSocket.cpp
-            Platforms/Linux/LinuxClientSocket.h
+            Platforms/Linux/LinuxTcpSocket.cpp
+            Platforms/Linux/LinuxTcpSocket.h
     )
 
     list(APPEND PLATFORM_INCLUDE_DIRS
@@ -43,8 +46,14 @@ endif()
 add_executable(rpi_backend
         main.cpp
 
-        TClientSocket.cpp
-        TClientSocket.h
+        T_TCPSocket.cpp
+        T_TCPSocket.h
+
+        T_UDPSocket.h
+        T_UDPSocket.cpp
+
+        DiscoveryServer.cpp
+        DiscoveryServer.h
 
         Application.cpp
         Application.h

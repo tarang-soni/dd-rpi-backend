@@ -12,11 +12,11 @@
 
 namespace dd_rpi_backend
 {
-    class TClientSocket
+    class T_TCPSocket
     {
         public:
-        TClientSocket();
-        virtual ~TClientSocket();
+        T_TCPSocket();
+        virtual ~T_TCPSocket();
 
         virtual bool connect(const char* ip_addr,uint16_t port) = 0;
 
@@ -25,7 +25,7 @@ namespace dd_rpi_backend
 
         virtual void close() = 0;
 
-        static std::unique_ptr<TClientSocket> create();
+        static std::unique_ptr<T_TCPSocket> create();
 
     };
 } // dd_rpi_backend

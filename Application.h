@@ -4,7 +4,7 @@
 
 #ifndef RPI_BACKEND_APPLICATION_H
 #define RPI_BACKEND_APPLICATION_H
-#include "TClientSocket.h"
+#include "T_TCPSocket.h"
 #include <cstdint>
 
 #include "NetworkManager.h"

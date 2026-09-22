@@ -7,6 +7,8 @@
 #include <thread>
 
 #include "CommandListener.h"
+#include "DiscoveryServer.h"
+
 namespace dd_rpi_backend
 {
     class NetworkManager
@@ -16,13 +18,19 @@ namespace dd_rpi_backend
         NetworkManager();
         ~NetworkManager();
 
-        void start(const std::string& host,uint16_t port,CommandHandler handler);
+        //void start(const std::string& host,uint16_t port,CommandHandler handler);//delete later after implementation
         void stop();
         void sendResponse(ClientResponse response);
+
+        void startDiscovery(uint16_t port);
+        void stopDiscovery(uint16_t port);
+        void tcpConnect(const std::string& host,uint16_t port);
     private:
 
         CommandListener m_commandListener;
-        std::thread m_listenerThread;
+        DiscoveryServer m_discoveryServer;
+        std::thread m_commandThread;
+        std::thread m_discoveryThread;
 
     };
 }

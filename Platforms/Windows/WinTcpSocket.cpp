@@ -2,38 +2,28 @@
 // Created by sonit on 29-07-2026.
 //
 
-#include "WinClientSocket.h"
+#include "WinTcpSocket.h"
 
 #include <iostream>
 #include <ostream>
 
 namespace dd_rpi_backend
 {
-    WinClientSocket::WinClientSocket()
+    WinTcpSocket::WinTcpSocket()
     {
-        WSADATA wsaData;
-        if (WSAStartup(MAKEWORD(2,2),&wsaData)!=0)
-        {
-            std::cerr << "WSAStartup failed." << std::endl;
-        }else
-        {
-            std::cerr << "WSAStartup success." << std::endl;
-
-            s = socket(AF_INET,SOCK_STREAM,IPPROTO_TCP);
-            int flag = 1;
-            // socketFd is your native socket handle
-            setsockopt(s, IPPROTO_TCP, TCP_NODELAY, (char*)&flag, sizeof(int));
-        }
+        s = socket(AF_INET,SOCK_STREAM,IPPROTO_TCP);
+        int flag = 1;
+        // socketFd is your native socket handle
+        setsockopt(s, IPPROTO_TCP, TCP_NODELAY, (char*)&flag, sizeof(int));
 
     }
 
-    WinClientSocket::~WinClientSocket()
+    WinTcpSocket::~WinTcpSocket()
     {
         closesocket(s);
-        WSACleanup();
     }
 
-    bool WinClientSocket::connect(const char *ip_addr, u_short port)
+    bool WinTcpSocket::connect(const char *ip_addr, u_short port)
     {
         sockaddr_in addr;
         addr.sin_family = AF_INET;
@@ -49,7 +39,7 @@ namespace dd_rpi_backend
         return true;
     }
 
-    bool WinClientSocket::send(const ClientResponse& message)
+    bool WinTcpSocket::send(const ClientResponse& message)
     {
         auto rawByte = static_cast<ClientResponse>(message);
         if (const int bytesSent = ::send(s,reinterpret_cast<const char*>(&rawByte), 1, 0); bytesSent == SOCKET_ERROR)
@@ -59,7 +49,7 @@ namespace dd_rpi_backend
         }
         return true;
     }
-    ServerCommand WinClientSocket::receive()
+    ServerCommand WinTcpSocket::receive()
     {
         uint8_t buffer;
         int bytesReceived = recv(s,reinterpret_cast<char*> (&buffer),1,0);
@@ -78,7 +68,7 @@ namespace dd_rpi_backend
         return static_cast<ServerCommand>(buffer);
     }
 
-    void WinClientSocket::close()
+    void WinTcpSocket::close()
     {
         closesocket(s);
     }

@@ -1,7 +1,7 @@
 #ifndef RPI_BACKEND_LINUXCLIENTSOCKET_H
 #define RPI_BACKEND_LINUXCLIENTSOCKET_H
 
-#include "../../TClientSocket.h"
+#include "T_TCPSocket.h"
 #include "Protocols.h"
 
 #include <arpa/inet.h>
@@ -13,11 +13,11 @@
 namespace dd_rpi_backend
 {
 
-    class LinuxClientSocket : public TClientSocket
+    class LinuxTcpSocket : public T_TCPSocket
     {
     public:
-        LinuxClientSocket();
-        ~LinuxClientSocket() override;
+        LinuxTcpSocket();
+        ~LinuxTcpSocket() override;
 
         bool connect(const char* ip_addr, uint16_t port) override;
 

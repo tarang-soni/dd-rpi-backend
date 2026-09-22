@@ -4,9 +4,10 @@
 
 #ifndef RPI_BACKEND_COMMANDLISTENER_H
 #define RPI_BACKEND_COMMANDLISTENER_H
+#include <atomic>
 #include <functional>
 #include <memory>
-#include "TClientSocket.h"
+#include "T_TCPSocket.h"
 namespace dd_rpi_backend
 {
     class CommandListener
@@ -24,9 +25,9 @@ namespace dd_rpi_backend
     private:
         void stop();
     private:
-        std::unique_ptr<TClientSocket> m_socket;
+        std::unique_ptr<T_TCPSocket> m_socket;
         CommandCallback m_onCommandReceived;
-        bool m_listening{false};
+        std::atomic<bool> m_listening{false};
 
     };
 }

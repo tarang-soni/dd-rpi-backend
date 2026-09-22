@@ -2,7 +2,7 @@
 // Created by sonit on 29-07-2026.
 //
 
-#include "LinuxClientSocket.h"
+#include "LinuxTcpSocket.h"
 
 #include <iostream>
 #include <cstring>
@@ -10,7 +10,7 @@
 namespace dd_rpi_backend
 {
 
-LinuxClientSocket::LinuxClientSocket()
+LinuxTcpSocket::LinuxTcpSocket()
 {
     m_socket = socket(AF_INET, SOCK_STREAM, 0);
 
@@ -31,12 +31,12 @@ LinuxClientSocket::LinuxClientSocket()
     }
 }
 
-LinuxClientSocket::~LinuxClientSocket()
+LinuxTcpSocket::~LinuxTcpSocket()
 {
     close();
 }
 
-bool LinuxClientSocket::connect(const char *ip_addr, uint16_t port)
+bool LinuxTcpSocket::connect(const char *ip_addr, uint16_t port)
 {
     sockaddr_in addr{};
     addr.sin_family = AF_INET;
@@ -59,7 +59,7 @@ bool LinuxClientSocket::connect(const char *ip_addr, uint16_t port)
     return true;
 }
 
-bool LinuxClientSocket::send(const ClientResponse &message)
+bool LinuxTcpSocket::send(const ClientResponse &message)
 {
     uint8_t rawByte = static_cast<uint8_t>(message);
 
@@ -78,7 +78,7 @@ bool LinuxClientSocket::send(const ClientResponse &message)
     return true;
 }
 
-ServerCommand LinuxClientSocket::receive()
+ServerCommand LinuxTcpSocket::receive()
 {
     uint8_t buffer = 0;
 
@@ -104,7 +104,7 @@ ServerCommand LinuxClientSocket::receive()
     return static_cast<ServerCommand>(buffer);
 }
 
-void LinuxClientSocket::close()
+void LinuxTcpSocket::close()
 {
     if (m_socket != -1)
     {

@@ -6,7 +6,7 @@
 
 #include <iostream>
 
-#include "TClientSocket.h"
+#include "T_TCPSocket.h"
 
 dd_rpi_backend::CommandListener::CommandListener():m_socket{nullptr}
 {
@@ -15,7 +15,7 @@ dd_rpi_backend::CommandListener::CommandListener():m_socket{nullptr}
 
 bool dd_rpi_backend::CommandListener::connect(const std::string &host, uint16_t port)
 {
-    m_socket = TClientSocket::create();
+    m_socket = T_TCPSocket::create();
 
     if (!m_socket->connect(host.c_str(), port))
     {
