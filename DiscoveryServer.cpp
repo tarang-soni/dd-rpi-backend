@@ -43,9 +43,16 @@ namespace dd_rpi_backend
             {
                 if (data == "DD_DISCOVERY")
                 {
+                    // if (ip == "127.0.0.1") continue;
                     //m_udp->sendTo("DD_REPLY", ip, port);
                     std::cout << "Received: " << data << '\n';
                     std::cout << "From: " << ip << ":" << port << '\n';
+                    m_udp->sendTo("DD_REPLY",ip, port);
+                }
+                if (data.find("DD_START_TCP")!=std::string::npos)
+                {
+                    uint16_t tcpPort = std::stoi(data.substr(data.find(":")+1));
+                    m_handler(ip,tcpPort);
                 }
             }
         }

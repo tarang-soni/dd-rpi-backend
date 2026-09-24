@@ -15,10 +15,10 @@ namespace dd_rpi_backend
         public:
         WinUDPSocket();
         ~WinUDPSocket() override;
-        virtual bool bind(uint16_t port) override;
-        virtual int sendTo(const std::string& data,const std::string& ip,uint16_t port) override;
-        virtual bool receiveFrom(std::string& data,std::string& senderIp,uint16_t& senderPort) override;
-        virtual void close() override;
+        bool bind(uint16_t port) override;
+        int sendTo(const std::string& data,const std::string& ip,uint16_t port) override;
+        bool receiveFrom(std::string& data,std::string& senderIp,uint16_t& senderPort) override;
+        void close() override;
 
     private:
         SOCKET s;

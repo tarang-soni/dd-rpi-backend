@@ -24,7 +24,7 @@ namespace dd_rpi_backend
 
 #elif defined(__linux__)
 
-        return std::make_unique<LinuxClientSocket>();
+        return std::make_unique<LinuxTcpSocket>();
 
 #else
 

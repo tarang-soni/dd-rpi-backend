@@ -55,6 +55,14 @@ void dd_rpi_backend::NetworkManager::stopDiscovery(uint16_t port)
 // }
 void dd_rpi_backend::NetworkManager::tcpConnect(const std::string &host, uint16_t port)
 {
+    if (!m_commandListener.connect(host, port))
+    {
+        std::cerr<<"ERROR: Failed to connect to the server"<<std::endl;
+        return;
+    }
+    m_serverIp = host;
+    m_commandListener.setCommandCallback(m_commandHandler);
+    m_commandThread = std::thread(&CommandListener::listenLoop, &m_commandListener);
 }
 void dd_rpi_backend::NetworkManager::stop()
 {

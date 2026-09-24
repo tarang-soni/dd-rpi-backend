@@ -15,7 +15,7 @@ bool dd_rpi_backend::Application::init()
     auto commandCallback = [this](ServerCommand cmd) {
         this->handleCommand(cmd);
     };
-    //m_networkManager.start("192.168.1.101",1234,commandCallback);
+    m_networkManager.setCommandCallback(commandCallback);
     m_networkManager.startDiscovery(40000);
     m_isRunning = true;
     return true;
@@ -44,7 +44,7 @@ void dd_rpi_backend::Application::handleCommand(ServerCommand cmd)
     {
         case ServerCommand::StartStream:
             std::cout << "[App]: Instructing VideoStreamer to START." << std::endl;
-            m_streamer.start("192.168.1.101",5000);
+            m_streamer.start(m_networkManager.serverIp(),5000);
 
             break;
 

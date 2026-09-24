@@ -25,12 +25,17 @@ namespace dd_rpi_backend
         void startDiscovery(uint16_t port);
         void stopDiscovery(uint16_t port);
         void tcpConnect(const std::string& host,uint16_t port);
+        inline void setCommandCallback(const CommandHandler &callback){m_commandHandler = callback;}
+        inline std::string& serverIp(){return m_serverIp;}
     private:
 
         CommandListener m_commandListener;
         DiscoveryServer m_discoveryServer;
         std::thread m_commandThread;
         std::thread m_discoveryThread;
+
+        CommandHandler m_commandHandler;
+        std::string m_serverIp;
 
     };
 }

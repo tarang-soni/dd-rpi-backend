@@ -34,14 +34,14 @@ bool dd_rpi_backend::VideoStreamer::start(const std::string& clientIp, int port)
 #if defined(_WIN32) || defined(_WIN64)
 
     pipelineString =
-        "mfvideosrc ! "
-        "videoconvert ! "
-        "video/x-raw,width=640,height=480,framerate=30/1 ! "
-        "x264enc tune=zerolatency ! "
-        "rtph264pay config-interval=1 ! "
-        "udpsink host=" + clientIp +
-        " port=" + std::to_string(port) +
-        " sync=false";
+    "mfvideosrc ! "
+    "videoconvert ! "
+    "video/x-raw,width=640,height=480,framerate=30/1 ! "
+    "jpegenc quality=60 ! "
+    "rtpjpegpay pt=26 ! "
+    "udpsink host=" + clientIp +
+    " port=" + std::to_string(port) +
+    " sync=false async=false";
 
 #elif defined(__linux__)
 
