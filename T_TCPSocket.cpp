@@ -7,7 +7,7 @@
 #if defined(_WIN32) || defined(_WIN64)
     #include "Platforms/Windows/WinTcpSocket.h"
 #elif defined(__linux__)
-    #include "Platforms/Linux/LinuxClientSocket.h"
+    #include "Platforms/Linux/LinuxTcpSocket.h"
 #endif
 
 namespace dd_rpi_backend
