@@ -31,6 +31,8 @@ elseif(UNIX)
     list(APPEND PLATFORM_SOURCES
             Platforms/Linux/LinuxTcpSocket.cpp
             Platforms/Linux/LinuxTcpSocket.h
+            Platforms/Linux/LinuxUDPSocket.cpp
+            Platforms/Linux/LinuxUDPSocket.h
     )
 
     list(APPEND PLATFORM_INCLUDE_DIRS
