@@ -19,7 +19,7 @@ namespace dd_rpi_backend
 #if defined(_WIN32) || defined(_WIN64)
         return std::make_unique<WinUDPSocket>();
 #elif defined(__linux__)
-        return std::make_unique<LinuxUDPSocket>
+        return std::make_unique<LinuxUDPSocket>();
 #else
 
         throw std::runtime_error("Unsupported platform");
